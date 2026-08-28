@@ -1,25 +1,32 @@
 ---
 name: requesting-code-review
-description: Use when completing tasks, implementing major features, or before merging to verify work meets requirements
+description: Use when independent judgment is needed for a named high-impact risk, shared boundary, or consequential merge
 ---
 
 # Requesting Code Review
 
-Dispatch a code reviewer subagent to catch issues before they cascade. The reviewer gets precisely crafted context for evaluation — never your session's history.
+Dispatch a code reviewer when independent judgment is the cheapest reliable
+evidence for a named risk or decision. The reviewer gets precisely crafted
+context for evaluation — never your session's history.
 
-**Core principle:** Review early, review often.
+**Core principle:** Review where it changes a consequential decision.
 
 ## When to Request Review
 
-**Mandatory:**
-- After each task in subagent-driven development
-- After completing major feature
-- Before merge to main
+**Use when retained by preflight:**
+- A security, compatibility, data-loss, or public-interface risk benefits from independent judgment
+- A shared or externally visible merge is consequential enough to justify a second set of eyes
+- A load-bearing boundary will affect several later tasks
 
-**Optional but valuable:**
+**Optional:**
 - When stuck (fresh perspective)
 - Before refactoring (baseline check)
 - After fixing complex bug
+
+Do not dispatch a reviewer merely because a task ended, a feature is
+"major," or a merge exists. First name the risk or decision. Reviewers
+check whether the mechanism belongs in scope before judging whether it is
+implemented correctly.
 
 ## How to Request
 
@@ -82,7 +89,7 @@ You: [Fix progress indicators]
 ## Red Flags
 
 **Never:**
-- Skip review because "it's simple"
+- Skip a review retained for a named high-impact risk because "it's simple"
 - Ignore Critical issues
 - Proceed with unfixed Important issues
 - Argue with valid technical feedback

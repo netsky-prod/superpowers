@@ -21,13 +21,18 @@ This is not negotiable. You cannot rationalize your way out of this.
 
 **Before entering plan mode:** if you haven't already brainstormed, invoke the brainstorming skill first.
 
-Then announce "Using [skill] to [purpose]" and follow the skill exactly. If it has a checklist, create a todo per item.
+Then announce "Using [skill] to [purpose]" and follow the skill exactly.
+Invoking a skill means reading applicable guidance; it does not justify
+creating that skill's prerequisites or machinery. For creative work,
+brainstorming's preflight determines which downstream process skills and
+checklist items actually apply. Do not create a spec to justify a plan, a
+plan to justify subagents, or executable code to justify tests.
 
 ## Skill Priority
 
 When multiple skills apply, process skills come first — they set the approach, then implementation skills (frontend-design, etc.) carry it out. Brainstorming and systematic-debugging are Superpowers' most common process skills, but the rule holds for any of them.
 
-- "Let's build X" → superpowers:brainstorming first, then implementation skills.
+- "Let's build X" → superpowers:brainstorming first, then only the process and implementation skills retained by its preflight.
 - "Fix this bug" → superpowers:systematic-debugging first, then domain skills.
 
 ## Red Flags

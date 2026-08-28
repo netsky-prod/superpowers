@@ -1,13 +1,15 @@
 ---
 name: writing-plans
-description: Use when you have a spec or requirements for a multi-step task, before touching code
+description: Use when implementation has several dependent steps or contributors that require explicit sequencing or handoff
 ---
 
 # Writing Plans
 
 ## Overview
 
-Write comprehensive implementation plans assuming the engineer has zero context for our codebase and questionable taste. Document everything they need to know: which files to touch for each task, code, testing, docs they might need to check, how to test it. Give them the whole plan as bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.
+Write an implementation plan only when sequencing or handoff earned one
+during brainstorming preflight. Include the context, boundaries, and
+evidence an executor needs without expanding the product or process.
 
 Assume they are a skilled developer, but know almost nothing about our toolset or problem domain. Assume they don't know good test design very well.
 
@@ -20,7 +22,10 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 ## Scope Check
 
-If the spec covers multiple independent subsystems, it should have been broken into sub-project specs during brainstorming. If it wasn't, suggest breaking this into separate plans — one per subsystem. Each plan should produce working, testable software on its own.
+If the retained design covers multiple independent subsystems, plan the
+smallest useful slices and their dependencies. Do not create one plan per
+subsystem by default. Each planned slice should produce a meaningful
+deliverable with evidence appropriate to its claims.
 
 ## File Structure
 
@@ -35,21 +40,21 @@ This structure informs the task decomposition. Each task should produce self-con
 
 ## Task Right-Sizing
 
-A task is the smallest unit that carries its own test cycle and is worth a
-fresh reviewer's gate. When drawing task boundaries: fold setup,
+A task is the smallest coherent unit that produces a meaningful deliverable.
+It does not automatically earn its own test cycle, commit, or reviewer.
+When drawing task boundaries: fold setup,
 configuration, scaffolding, and documentation steps into the task whose
-deliverable needs them; split only where a reviewer could meaningfully
-reject one task while approving its neighbor. Each task ends with an
-independently testable deliverable.
+deliverable needs them; split only where the work has a real dependency,
+ownership, or integration boundary. Each task ends with independently
+checkable evidence, which need not be an automated test.
 
-## Bite-Sized Task Granularity
+## Task Granularity
 
-**Each step is one action (2-5 minutes):**
-- "Write the failing test" - step
-- "Run it to make sure it fails" - step
-- "Implement the minimal code to make the test pass" - step
-- "Run the tests and make sure they pass" - step
-- "Commit" - step
+Describe meaningful implementation moves, not keystrokes or ceremonial
+microsteps. Include a test-first cycle only for executable behavior covered
+by the retained TDD scope. Include a review checkpoint only where preflight
+named the risk or decision it serves. Group setup, validation, and commit
+operations with the deliverable they support.
 
 ## Plan Document Header
 
@@ -58,7 +63,7 @@ independently testable deliverable.
 ```markdown
 # [Feature Name] Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** Execute with the lightest workflow retained by the preflight. Use superpowers:subagent-driven-development only when independent task handoff is useful; otherwise execute directly.
 
 **Goal:** [One sentence describing what this builds]
 
@@ -66,14 +71,14 @@ independently testable deliverable.
 
 **Tech Stack:** [Key technologies/libraries]
 
-**Spec:** [path to the spec/design doc this plan implements — the plan
-argues from the spec, so the spec travels with it; executors read both]
+**Source:** [approved chat design, requirements, issue, or spec path that
+defines the outcome]
 
 ## Global Constraints
 
-[The spec's project-wide requirements — version floors, dependency limits,
-naming and copy rules, platform requirements — one line each, with exact
-values copied verbatim from the spec. Every task's requirements implicitly
+[Project-wide requirements — version floors, dependency limits, naming and
+copy rules, platform requirements — one line each, with exact values copied
+verbatim from the source. Every task's requirements implicitly
 include this section.]
 
 ---
@@ -87,7 +92,7 @@ include this section.]
 **Files:**
 - Create: `exact/path/to/file.py`
 - Modify: `exact/path/to/existing.py:123-145`
-- Test: `tests/exact/path/to/test.py`
+- Evidence: `[exact existing test, pressure scenario, build, inspection, or check retained by preflight]`
 
 **Interfaces:**
 - Consumes: [what this task uses from earlier tasks — exact signatures]
@@ -95,37 +100,28 @@ include this section.]
   and return types. A task's implementer sees only their own task; this
   block is how they learn the names and types neighboring tasks use.]
 
-- [ ] **Step 1: Write the failing test**
-
-```python
-def test_specific_behavior():
-    result = function(input)
-    assert result == expected
-```
-
-- [ ] **Step 2: Run test to verify it fails**
-
-Run: `pytest tests/path/test.py::test_name -v`
-Expected: FAIL with "function not defined"
-
-- [ ] **Step 3: Write minimal implementation**
+- [ ] **Step 1: Implement the coherent change**
 
 ```python
 def function(input):
     return expected
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [ ] **Step 2: Capture the retained evidence**
 
-Run: `pytest tests/path/test.py::test_name -v`
-Expected: PASS
+Run: `[exact command or inspection procedure]`
+Expected: `[observable result that supports the named claim]`
 
-- [ ] **Step 5: Commit**
+- [ ] **Step 3: Commit the deliverable when a commit boundary is useful**
 
 ```bash
-git add tests/path/test.py src/path/file.py
+git add src/path/file.py
 git commit -m "feat: add specific feature"
 ```
+
+When TDD was retained, expand the evidence step into its RED, GREEN, and
+refactor cycle. Do not add that cycle to tasks outside the retained TDD
+scope.
 ````
 
 ## No Placeholders
@@ -140,32 +136,27 @@ Every step must contain the actual content an engineer needs. These are **plan f
 
 ## Self-Review
 
-After writing the complete plan, look at the spec with fresh eyes and check the plan against it. This is a checklist you run yourself — not a subagent dispatch.
+After writing the complete plan, look at its source with fresh eyes. This is a checklist you run yourself — not a subagent dispatch.
 
-**1. Spec coverage:** Skim each section/requirement in the spec. Can you point to a task that implements it? List any gaps.
+**1. Outcome coverage:** Can you point to a task for each retained requirement and to evidence for each supported claim? List any gaps.
 
 **2. Placeholder scan:** Search your plan for red flags — any of the patterns from the "No Placeholders" section above. Fix them.
 
 **3. Type consistency:** Do the types, method signatures, and property names you used in later tasks match what you defined in earlier tasks? A function called `clearLayers()` in Task 3 but `clearFullLayers()` in Task 7 is a bug.
 
-If you find issues, fix them inline. No need to re-review — just fix and move on. If you find a spec requirement with no task, add the task.
+If you find issues, fix them inline. No need to dispatch a reviewer. If a source requirement has no task, add the smallest task that implements it.
 
 ## Execution Handoff
 
-After saving the plan, offer execution choice:
+After saving the plan, follow the execution mode already retained during
+preflight:
 
-**"Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Two execution options:**
+- Use superpowers:subagent-driven-development only when tasks are genuinely
+  independent and context isolation helps.
+- Use superpowers:executing-plans when the plan will be executed in a
+  separate session.
+- Execute directly when neither delegation nor session handoff earns its
+  overhead.
 
-**1. Subagent-Driven (recommended)** - I dispatch a fresh subagent per task, review between tasks, fast iteration
-
-**2. Inline Execution** - Execute tasks in this session using executing-plans, batch execution with checkpoints
-
-**Which approach?"**
-
-**If Subagent-Driven chosen:**
-- **REQUIRED SUB-SKILL:** Use superpowers:subagent-driven-development
-- Fresh subagent per task + two-stage review
-
-**If Inline Execution chosen:**
-- **REQUIRED SUB-SKILL:** Use superpowers:executing-plans
-- Batch execution with checkpoints for review
+Ask the user to choose only when the choice changes cost, authority, or an
+external side effect and their preference is not already known.

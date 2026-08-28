@@ -1,13 +1,14 @@
 ---
 name: test-driven-development
-description: Use when implementing any feature or bugfix, before writing implementation code
+description: Use when changing retained executable behavior whose regression would break a supported product claim
 ---
 
 # Test-Driven Development (TDD)
 
 ## Overview
 
-Write the test first. Watch it fail. Write minimal code to pass.
+When automated regression evidence was justified during preflight, write
+the test first, watch it fail, then write minimal code to pass.
 
 **Core principle:** If you didn't watch the test fail, you don't know if it tests the right thing.
 
@@ -15,28 +16,29 @@ Write the test first. Watch it fail. Write minimal code to pass.
 
 ## When to Use
 
-**Always:**
-- New features
-- Bug fixes
-- Refactoring
-- Behavior changes
+Use TDD for retained executable behavior when a repeatable regression test
+is the cheapest reliable evidence for an important claim.
 
-**Exceptions (ask your human partner):**
-- Throwaway prototypes
-- Generated code
-- Configuration files
+Do not invoke TDD merely because the request contains the words feature,
+bug, or change. Do not create runtime code or a test framework for prompts,
+skills, prose, static templates, configuration-only work, generated code,
+or throwaway probes. Use format validation, representative pressure
+scenarios, direct inspection, or a focused manual check when those are the
+evidence the artifact actually needs.
 
-Thinking "skip TDD just this once"? Stop. That's rationalization.
+If the human explicitly excludes tests, honor that scope unless doing so
+would conceal a concrete safety or irreversible-action risk; surface that
+risk instead of silently building a harness.
 
 ## The Iron Law
 
 ```
-NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST
+NO IN-SCOPE EXECUTABLE BEHAVIOR WITHOUT A FAILING TEST FIRST
 ```
 
 Write code before the test? Delete it. Start over.
 
-**No exceptions:**
+**Within the retained TDD scope, no exceptions:**
 - Don't keep it as "reference"
 - Don't "adapt" it while writing tests
 - Don't look at it
@@ -284,7 +286,7 @@ Extract validation for multiple fields if needed.
 
 Before marking work complete:
 
-- [ ] Every new function/method has a test
+- [ ] Every new behavior covered by the retained regression claims has a test
 - [ ] Watched each test fail before implementing
 - [ ] Each test failed for expected reason (feature missing, not typo)
 - [ ] Wrote minimal code to pass each test
@@ -313,8 +315,8 @@ Never fix bugs without a test.
 ## Final Rule
 
 ```
-Production code → test exists and failed first
-Otherwise → not TDD
+In-scope executable behavior → test exists and failed first
+Other artifacts → use the evidence selected during preflight
 ```
 
 No exceptions without your human partner's permission.
