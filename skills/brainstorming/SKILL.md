@@ -25,12 +25,14 @@ Before writing anything, determine:
 
 1. **Deliverable** — what the user actually wants to exist.
 2. **Claims** — what must be true for that deliverable to be credible.
-3. **Risks** — concrete security, compatibility, irreversible, external,
+3. **Knowledge** — for every requirement, whether it is grounded,
+   research-needed, a human decision, or an explicit assumption.
+4. **Risks** — concrete security, compatibility, irreversible, external,
    or coordination failures that matter here.
-4. **Evidence** — the cheapest reliable evidence for each claim or risk.
-5. **Process** — which artifacts and gates earn their cost, and the named
+5. **Evidence** — the cheapest reliable evidence for each claim or risk.
+6. **Process** — which artifacts and gates earn their cost, and the named
    claim, risk, or decision each one serves.
-6. **Omissions** — what you will deliberately not create.
+7. **Omissions** — what you will deliberately not create.
 
 Reflection selects the evidence; it never substitutes for it. Keep the
 cheapest evidence that actually supports the product's claims, and remove
@@ -38,8 +40,33 @@ only machinery with no such job.
 
 Surface the result in one compact sentence so your human partner can
 correct it. Example: "This is a reversible prompt-only package; I will
-write the skills and run a few realistic pressure scenarios, but I will
-not create runtime code, a unit-test framework, or per-file reviewers."
+resolve two current-API questions from primary docs, write the skills, and
+run a few realistic pressure scenarios, but I will not create runtime code,
+a unit-test framework, or per-file reviewers."
+
+### Research before implementation
+
+Give every requirement exactly one disposition:
+
+- **Grounded** — the brief, repository, or an authoritative source already
+  answers it. Name that evidence.
+- **Research-needed** — an unresolved fact could change the design or code.
+- **Human-decision** — it is a preference, trade-off, or authority question;
+  research cannot decide it for the user.
+- **Explicit-assumption** — the uncertainty is low-impact and reversible;
+  state the assumption instead of silently guessing.
+
+Resolve every research-needed item before writing a spec, plan, or code.
+Start with repository evidence, then use current primary documentation or
+standards, and use a minimal probe only when sources cannot establish actual
+behavior. Record the conclusion and the implementation constraint it creates.
+If a new implementation-affecting unknown appears later, pause only the
+affected work, resolve it, and continue; do not restart the whole process.
+
+Do not research obvious or already-grounded statements merely because every
+requirement has a disposition. Do not treat a discoverable fact as a product
+decision, or a product decision as a fact to browse for. Keep the research
+ledger in chat unless context loss or handoff gives a durable file a job.
 
 Apply this counterfactual before retaining any process item:
 
@@ -125,6 +152,8 @@ enough; do not turn acknowledgement into a ritual approval round.
 | "The spike works, so I'll keep the code" | A spike's output is an answer. Keeping the code is a new request — classify it. |
 | "More review is always safer" | A reviewer without a named risk or decision adds confidence theater, not evidence. |
 | "I can trim unnecessary machinery later" | Late deletion is recovery. The preflight exists to prevent creating it. |
+| "I can resolve API details while coding" | If the answer can change the implementation, it is research-needed and must be resolved first. |
+| "Research-first means researching every bullet" | Every requirement needs a disposition; only unresolved implementation-affecting facts need research. |
 
 ## Checklist
 
@@ -140,25 +169,29 @@ only the applicable items below.
 **Bounded:**
 1. **Explore project context** — check files, docs, recent commits
 2. **Ask clarifying questions** — one at a time, the ones that matter
-3. **Present short design in chat** — approach, files touched, retained evidence
-4. **Resolve approval condition if preflight named one**
-5. **Implement** — use only the validation and workflow retained by preflight
+3. **Resolve research-needed facts** — repository, primary sources, then minimal probes
+4. **Present short design in chat** — approach, files touched, retained evidence
+5. **Resolve approval condition if preflight named one**
+6. **Implement** — use only the validation and workflow retained by preflight
 
 **Architectural:**
 1. **Explore project context** — check files, docs, recent commits
 2. **Offer the visual companion just-in-time** — NOT upfront. The first time a question would genuinely be clearer shown than described, offer it then (its own message); on approval its browser tab opens for you. If no visual question ever arises, never offer it. See the Visual Companion section below.
 3. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
-4. **Propose 2-3 approaches** — with trade-offs and your recommendation
-5. **Present design** — in sections scaled to their complexity
-6. **Resolve approval condition if preflight named one**
-7. **Transition directly to implementation unless a written spec or plan earned its cost**
-8. **If retained, write and review only the justified artifact, then invoke the matching skill**
+4. **Resolve research-needed facts** — repository, primary sources, then minimal probes
+5. **Propose 2-3 approaches** — with trade-offs and your recommendation
+6. **Present design** — in sections scaled to their complexity
+7. **Resolve approval condition if preflight named one**
+8. **Transition directly to implementation unless a written spec or plan earned its cost**
+9. **If retained, write and review only the justified artifact, then invoke the matching skill**
 
 ## Process Flow
 
 ```dot
 digraph brainstorming {
-    "Preflight: deliverable, claims, risks, evidence" [shape=box];
+    "Preflight: deliverable, claims, knowledge, risks, evidence" [shape=box];
+    "Research-needed facts?" [shape=diamond];
+    "Resolve from repo, primary sources, or probe" [shape=box];
     "Name retained process and omissions" [shape=box];
     "Classify design shape" [shape=diamond];
     "Probe and report" [shape=doublecircle];
@@ -170,7 +203,10 @@ digraph brainstorming {
     "Create only justified artifact" [shape=box];
     "Implement with retained evidence" [shape=doublecircle];
 
-    "Preflight: deliverable, claims, risks, evidence" -> "Name retained process and omissions";
+    "Preflight: deliverable, claims, knowledge, risks, evidence" -> "Research-needed facts?";
+    "Research-needed facts?" -> "Resolve from repo, primary sources, or probe" [label="yes"];
+    "Resolve from repo, primary sources, or probe" -> "Research-needed facts?";
+    "Research-needed facts?" -> "Name retained process and omissions" [label="no"];
     "Name retained process and omissions" -> "Classify design shape";
     "Classify design shape" -> "Probe and report" [label="spike"];
     "Classify design shape" -> "Short in-chat design" [label="bounded"];
