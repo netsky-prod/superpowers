@@ -32,6 +32,10 @@ Before writing anything, determine:
    claim, risk, or decision each one serves.
 6. **Omissions** — what you will deliberately not create.
 
+Reflection selects the evidence; it never substitutes for it. Keep the
+cheapest evidence that actually supports the product's claims, and remove
+only machinery with no such job.
+
 Surface the result in one compact sentence so your human partner can
 correct it. Example: "This is a reversible prompt-only package; I will
 write the skills and run a few realistic pressure scenarios, but I will
@@ -50,15 +54,26 @@ and available skills are not independent justification.
 | Process item | Create it only when |
 |---|---|
 | Written spec | A durable interface, multi-party agreement, or likely context loss needs a stable source of truth |
-| Implementation plan | Several dependent steps or contributors need sequencing or handoff |
+| Implementation plan | Work must cross contributors or contexts, or dependencies cannot be executed reliably in one context; ordinary sequential steps do not qualify |
 | Automated test | Retained executable behavior has a regression claim worth rechecking |
 | Pressure scenario | Prompt, policy, or skill behavior must hold under realistic use |
-| Reviewer | Independent judgment addresses a named high-impact risk or decision |
+| Reviewer | Independent judgment addresses a named security boundary, untrusted-input path, protocol contract, irreversible effect, data-loss risk, or consequential decision |
 | Human approval gate | A material design choice remains open, or work is destructive, irreversible, security-sensitive, or externally visible |
 
 Use existing lightweight validation when it already proves a claim. Never
 add runtime code solely to make prose, prompts, templates, or skills unit
 testable.
+
+An explicit containment or protocol promise in the brief — for example,
+"must not follow symlinks outside the root," secret redaction, network
+request replay, or safe response headers — retains one focused boundary or
+final review unless the same independent judgment is already supplied.
+Conversely, prompt-only, local, reversible, and static work does not acquire
+a reviewer merely because one is available.
+
+The preflight decision governs downstream skills. A downstream default may
+not recreate a plan, test harness, review loop, or approval gate that was
+deliberately omitted here.
 
 ## Three Paths
 
