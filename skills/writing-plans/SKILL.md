@@ -14,6 +14,10 @@ evidence an executor needs without expanding the product or process.
 Ordinary sequential work that one agent can hold and execute in the current
 context does not need a plan document.
 
+Plans consume resolved requirements. If an implementation-affecting unknown
+remains, return to superpowers:researching-before-implementation instead of
+embedding a guess or a research task in the plan.
+
 Assume they are a skilled developer, but know almost nothing about our toolset or problem domain. Assume they don't know good test design very well.
 
 **Announce at start:** "I'm using the writing-plans skill to create the implementation plan."

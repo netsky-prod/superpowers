@@ -260,21 +260,20 @@ turn loses the bootstrap — start a fresh session if skills stop triggering.
 
 ## The Basic Workflow
 
-1. **brainstorming** - Activates before writing code. Refines rough ideas through questions, explores alternatives, presents design in sections for validation. Saves design document.
+1. **brainstorming** - Activates before writing code. Identifies the deliverable, claims, knowledge gaps, risks, cheapest evidence, retained process, and deliberate omissions before artifacts exist.
 
-2. **using-git-worktrees** - Activates after design approval. Creates isolated workspace on new branch, runs project setup, verifies clean test baseline.
+2. **researching-before-implementation** - Activates only for unresolved facts that could change implementation. Grounds them in repository evidence, primary sources, or a minimal probe before design or code.
 
-3. **writing-plans** - Activates with approved design. Breaks work into bite-sized tasks (2-5 minutes each). Every task has exact file paths, complete code, verification steps.
+3. **implementation** - Starts directly when one context can hold the work. **writing-plans**, **using-git-worktrees**, or agent delegation activate only when sequencing, isolation, or handoff earns their cost.
 
-4. **subagent-driven-development** or **executing-plans** - Activates with plan. Dispatches fresh subagent per task with two-stage review (spec compliance, then code quality), or executes in batches with human checkpoints.
+4. **retained evidence** - Automated tests, pressure scenarios, builds, or inspection are selected for the actual product claims and risks. Prompt and prose work does not acquire runtime code merely to become unit-testable.
 
-5. **test-driven-development** - Activates during implementation. Enforces RED-GREEN-REFACTOR: write failing test, watch it fail, write minimal code, watch it pass, commit. Deletes code written before tests.
+5. **review** - Independent review and human approval activate only for a named consequential boundary, decision, or external effect.
 
-6. **requesting-code-review** - Activates between tasks. Reviews against plan, reports issues by severity. Critical issues block progress.
+6. **finishing-a-development-branch** - Verifies the retained evidence and presents the appropriate integration choices.
 
-7. **finishing-a-development-branch** - Activates when tasks complete. Verifies tests, presents options (merge/PR/keep/discard), cleans up worktree.
-
-**The agent checks for relevant skills before any task.** Mandatory workflows, not suggestions.
+**The agent checks for relevant skills before any task.** Skills remain binding,
+but the preflight selects which process is relevant before it creates anything.
 
 ## Community
 
@@ -297,6 +296,7 @@ Superpowers is built by [Jesse Vincent](https://blog.fsck.com) and the rest of t
 
 **Collaboration** 
 - **brainstorming** - Socratic design refinement
+- **researching-before-implementation** - Resolve implementation-changing unknowns before code
 - **writing-plans** - Detailed implementation plans
 - **executing-plans** - Batch execution with checkpoints
 - **dispatching-parallel-agents** - Concurrent subagent workflows
@@ -312,7 +312,8 @@ Superpowers is built by [Jesse Vincent](https://blog.fsck.com) and the rest of t
 
 ## Philosophy
 
-- **Test-Driven Development** - Write tests first, always
+- **Research before guessing** - Resolve implementation-changing unknowns before code
+- **Evidence proportional to claims** - Use tests where executable regression claims earn them
 - **Systematic over ad-hoc** - Process over guessing
 - **Complexity reduction** - Simplicity as primary goal
 - **Evidence over claims** - Verify before declaring success

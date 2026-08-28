@@ -27,12 +27,16 @@ creating that skill's prerequisites or machinery. For creative work,
 brainstorming's preflight determines which downstream process skills and
 checklist items actually apply. Do not create a spec to justify a plan, a
 plan to justify subagents, or executable code to justify tests.
+Researching-before-implementation may run inside that preflight when a
+discoverable unknown can change implementation. It resolves the unknown; it
+does not authorize specs, plans, probes larger than the question, or other
+downstream machinery.
 
 ## Skill Priority
 
 When multiple skills apply, process skills come first — they set the approach, then implementation skills (frontend-design, etc.) carry it out. Brainstorming and systematic-debugging are Superpowers' most common process skills, but the rule holds for any of them.
 
-- "Let's build X" → superpowers:brainstorming first, then only the process and implementation skills retained by its preflight.
+- "Let's build X" → superpowers:brainstorming first; resolve any research-needed items, then use only the process and implementation skills retained by its preflight.
 - "Fix this bug" → superpowers:systematic-debugging first, then domain skills.
 
 ## Red Flags

@@ -60,6 +60,8 @@ Resolve every research-needed item before writing a spec, plan, or code.
 Start with repository evidence, then use current primary documentation or
 standards, and use a minimal probe only when sources cannot establish actual
 behavior. Record the conclusion and the implementation constraint it creates.
+**REQUIRED SUB-SKILL:** When at least one item is research-needed, use
+superpowers:researching-before-implementation.
 If a new implementation-affecting unknown appears later, pause only the
 affected work, resolve it, and continue; do not restart the whole process.
 
