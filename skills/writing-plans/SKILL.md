@@ -1,6 +1,6 @@
 ---
 name: writing-plans
-description: Use when implementation has several dependent steps or contributors that require explicit sequencing or handoff
+description: Use when implementation must cross contributors or contexts, or its dependencies cannot be executed reliably in one context
 ---
 
 # Writing Plans
@@ -10,6 +10,9 @@ description: Use when implementation has several dependent steps or contributors
 Write an implementation plan only when sequencing or handoff earned one
 during brainstorming preflight. Include the context, boundaries, and
 evidence an executor needs without expanding the product or process.
+
+Ordinary sequential work that one agent can hold and execute in the current
+context does not need a plan document.
 
 Assume they are a skilled developer, but know almost nothing about our toolset or problem domain. Assume they don't know good test design very well.
 

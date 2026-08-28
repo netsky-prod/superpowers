@@ -15,6 +15,7 @@ context for evaluation — never your session's history.
 
 **Use when retained by preflight:**
 - A security, compatibility, data-loss, or public-interface risk benefits from independent judgment
+- The brief makes a concrete containment or protocol promise involving untrusted input, filesystem boundaries, secret handling, network replay, or response construction
 - A shared or externally visible merge is consequential enough to justify a second set of eyes
 - A load-bearing boundary will affect several later tasks
 
@@ -27,6 +28,10 @@ Do not dispatch a reviewer merely because a task ended, a feature is
 "major," or a merge exists. First name the risk or decision. Reviewers
 check whether the mechanism belongs in scope before judging whether it is
 implemented correctly.
+
+Prefer one focused boundary or final review. Per-task review requires a
+different named high-impact risk in each task; repeated review of the same
+claim is ceremony, not additional evidence.
 
 ## How to Request
 
